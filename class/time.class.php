@@ -102,20 +102,68 @@ class time extends db
 
     public function get_day_id($day)
     {
-        $query=PARENT::p("SELECT * from day WHERE day_name LIKE ?");
-        $query->execute(['%'.$day.'%']);
-        return $query->fetch(PDO::FETCH_OBJ)->day_id;
+        $query = PARENT::p("SELECT * from day WHERE day_name = ?");
+        $query->execute([$day]);
+        $result = $query->fetch(PDO::FETCH_OBJ);
+        
+        // Check if result exists before accessing property
+        if ($result) {
+            return $result->day_id;
+        }
+        return null; // Return null if no match found
     }
 
     public function get_time_id($time)
     {
-        $query=PARENT::p("SELECT * from time WHERE start_time LIKE ?");
-        $query->execute(['%'.$time.'%']);
-        return $query->fetch(PDO::FETCH_OBJ)->time_id;
+        $query = PARENT::p("SELECT * from time WHERE start_time = ?");
+        $query->execute([$time]);
+        $result = $query->fetch(PDO::FETCH_OBJ);
+        
+        // Check if result exists before accessing property
+        if ($result) {
+            return $result->time_id;
+        }
+        return null; // Return null if no match found
+    }
+    
+    // New helper method to get current or next available time slot
+    public function get_current_time_slot()
+    {
+        date_default_timezone_set("Africa/Lagos");
+        $current_hour = date('H');
+        $current_minute = date('i');
+        
+        // Convert current time to minutes for easier comparison
+        $current_time_minutes = ($current_hour * 60) + $current_minute;
+        
+        // Get all time slots
+        $query = PARENT::p("SELECT * FROM `time` ORDER BY time_id ASC");
+        $query->execute();
+        $time_slots = $query->fetchAll(PDO::FETCH_OBJ);
+        
+        foreach ($time_slots as $slot) {
+            // Parse start time
+            $start_parts = explode(':', $slot->start_time);
+            $start_minutes = ($start_parts[0] * 60) + $start_parts[1];
+            
+            // Parse end time
+            $end_parts = explode(':', $slot->end_time);
+            $end_minutes = ($end_parts[0] * 60) + $end_parts[1];
+            
+            // Check if current time falls within this slot or if this is the next upcoming slot
+            if ($current_time_minutes >= $start_minutes && $current_time_minutes < $end_minutes) {
+                // Currently in this time slot
+                return $slot;
+            } elseif ($current_time_minutes < $start_minutes) {
+                // This is the next upcoming slot
+                return $slot;
+            }
+        }
+        
+        // If no upcoming slot found, return null
+        return null;
     }
     
 }
 
 ?>
-
-             
