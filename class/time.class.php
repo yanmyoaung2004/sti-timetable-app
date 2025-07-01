@@ -1,169 +1,154 @@
 <?php
 class time extends db
 {
-        //-------------topics Upload Function------------
-    
-    
-    public function add_time($str,$end,$hour)
+
+    public function add_time($str, $end, $hour)
     {
-        $query=PARENT::p("INSERT INTO `time` VALUES (NULL,?,?,?)");
-        return $query->execute([$str,$end,$hour]);
+        $query = PARENT::p("INSERT INTO `time` (`start_time`, `end_time`, `hours`, `time_added_date`) VALUES (?, ?, ?, NOW())");
+        return $query->execute([$str, $end, $hour]);
     }
+
+
     public function list_time()
     {
-        $query=PARENT::p("SELECT * FROM `time` ORDER BY time_id DESC");
+        $query = PARENT::p("SELECT * FROM `time` ORDER BY time_id DESC");
         $query->execute();
-        return $row=$query->fetchAll(PDO::FETCH_OBJ);
+        return $query->fetchAll(PDO::FETCH_OBJ);
     }
-    // public function list_topics_admin()
-    // {
-    //     $query=PARENT::p("SELECT * FROM topics LEFT JOIN department ON topics.dept_id=department.dept_id ORDER BY topic_id DESC");
-    //     $query->execute([]);
-    //     return $row=$query->fetchAll(PDO::FETCH_OBJ);
-    // }
-    
+
     public function del_time($time_id)
     {
-        $query=PARENT::p("DELETE FROM `time` WHERE `time_id`=?");
+        $query = PARENT::p("DELETE FROM `time` WHERE `time_id`=?");
         return $query->execute([$time_id]);
     }
 
     public function list_day()
     {
-        $query=PARENT::p("SELECT * FROM `day` ORDER BY day_name ASC");
+        $query = PARENT::p("SELECT * FROM `day` ORDER BY day_name ASC");
         $query->execute();
-        return $row=$query->fetchAll(PDO::FETCH_OBJ);
+        return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function add_schedule($course,$venue,$day,$time,$session,$semester)
+    public function add_schedule($course, $venue, $day, $time, $session, $semester)
     {
-        echo $venue.'ds';
-        $check=PARENT::p("SELECT * FROM `alloc_slots` WHERE  room_id=? AND time_id=? AND session_id=? AND semester_id=?");
-        $check->execute([$venue,$time,$session,$semester]);
-        //--------get course details -----------
-        $get=PARENT::p("SELECT * FROM `course` WHERE course_id=?");
+        $check = PARENT::p("SELECT * FROM `alloc_slots` WHERE room_id=? AND time_id=? AND session_id=? AND semester_id=?");
+        $check->execute([$venue, $time, $session, $semester]);
+
+        $get = PARENT::p("SELECT * FROM `course` WHERE course_id=?");
         $get->execute([$course]);
-        $row=$get->fetch(PDO::FETCH_OBJ);
-        $check1=PARENT::p("SELECT * FROM alloc_slots LEFT JOIN course ON alloc_slots.course_id=course.course_id WHERE course.dept_id=? AND course.level_id=? AND
-            alloc_slots.day_id=? AND alloc_slots.time_id=? AND alloc_slots.session_id=? AND alloc_slots.semester_id=?");
-        $check1->execute([$row->dept_id,$row->level_id,$day,$time,$session,$semester]);
-        if($count=$check->rowCount()>0){
+        $row = $get->fetch(PDO::FETCH_OBJ);
+
+        $check1 = PARENT::p("SELECT * FROM alloc_slots 
+            LEFT JOIN course ON alloc_slots.course_id=course.course_id 
+            WHERE course.dept_id=? AND course.level_id=? 
+            AND alloc_slots.day_id=? AND alloc_slots.time_id=? 
+            AND alloc_slots.session_id=? AND alloc_slots.semester_id=?");
+        $check1->execute([$row->dept_id, $row->level_id, $day, $time, $session, $semester]);
+
+        if ($check->rowCount() > 0) {
             return 3;
-        }
-        elseif($count=$check1->rowCount()>0){
-            // return 4;
+        } elseif ($check1->rowCount() > 0) {
             return 4;
-        }
-        else{
-            // return 1;
-            $query=PARENT::p("INSERT INTO `alloc_slots` VALUES (NULL,?,?,?,?,?,?,?)");
-            return $query->execute([$course,$venue,$day,$time,$semester,$session,PARENT::now()]);
+        } else {
+            $query = PARENT::p("INSERT INTO `alloc_slots` VALUES (NULL,?,?,?,?,?,?,?)");
+            return $query->execute([$course, $venue, $day, $time, $semester, $session, PARENT::now()]);
         }
     }
 
-    public function list_schedule($session,$semester)
+    public function list_schedule($session, $semester)
     {
-        $query=PARENT::p("SELECT * FROM `alloc_slots` LEFT JOIN course ON alloc_slots.course_id=course.course_id 
+        $query = PARENT::p("SELECT * FROM `alloc_slots` 
+            LEFT JOIN course ON alloc_slots.course_id=course.course_id 
             LEFT JOIN rooms ON alloc_slots.room_id=rooms.room_id
             LEFT JOIN day ON alloc_slots.day_id=day.day_id
             LEFT JOIN semester ON alloc_slots.semester_id=semester.semester_id
             LEFT JOIN session ON alloc_slots.session_id=session.session_id
             LEFT JOIN `time` ON alloc_slots.time_id=`time`.time_id
-            WHERE alloc_slots.session_id=? AND alloc_slots.semester_id=? ORDER BY alloc_id DESC");
-        $query->execute([$session,$semester]);
-        return $row=$query->fetchAll(PDO::FETCH_OBJ);
+            WHERE alloc_slots.session_id=? AND alloc_slots.semester_id=? 
+            ORDER BY alloc_id DESC");
+        $query->execute([$session, $semester]);
+        return $query->fetchAll(PDO::FETCH_OBJ);
     }
-    public function get_schedule($dept,$session,$semester,$level,$time,$day)
+
+    public function get_schedule($dept, $session, $semester, $level, $time, $day)
     {
-        // echo $day;
-        $query=PARENT::p("SELECT * FROM `alloc_slots` LEFT JOIN course ON `alloc_slots`.`course_id`=`course`.`course_id` 
+        $query = PARENT::p("SELECT * FROM `alloc_slots` 
+            LEFT JOIN course ON `alloc_slots`.`course_id`=`course`.`course_id` 
             LEFT JOIN rooms ON alloc_slots.room_id=rooms.room_id
-            WHERE `course`.`dept_id`=? AND session_id=? AND `alloc_slots`.semester_id=? AND `course`.level_id=? AND `alloc_slots`.time_id=? AND `alloc_slots`.day_id=?");
-        $query->execute([$dept,$session,$semester,$level,$time,$day]);
+            WHERE `course`.`dept_id`=? AND session_id=? AND `alloc_slots`.semester_id=? 
+            AND `course`.level_id=? AND `alloc_slots`.time_id=? AND `alloc_slots`.day_id=?");
+        $query->execute([$dept, $session, $semester, $level, $time, $day]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
+
     public function del_schedule($alloc_id)
     {
-        // echo $day;
-        $query=PARENT::p("DELETE FROM `alloc_slots` WHERE `alloc_id`=?");
+        $query = PARENT::p("DELETE FROM `alloc_slots` WHERE `alloc_id`=?");
         return $query->execute([$alloc_id]);
     }
 
-    public function schedule_checker($time,$day,$lecturer_id)
+    public function schedule_checker($time, $day, $lecturer_id)
     {
-        // echo $day=1;
-        // $time=2;
-        $query=PARENT::p("SELECT * from lecturer LEFT JOIN assigned_course ON lecturer.lecturer_id=assigned_course.lecturer_id LEFT JOIN course ON assigned_course.course_id=course.course_id LEFT JOIN alloc_slots ON assigned_course.course_id = `alloc_slots`.`course_id`
-        LEFT JOIN rooms ON alloc_slots.room_id = `rooms`.`room_id`
-         WHERE lecturer.lecturer_id=? AND day_id=? AND time_id=?");
-        $query->execute([$lecturer_id,$day,$time]);
+        $query = PARENT::p("SELECT * FROM lecturer 
+            LEFT JOIN assigned_course ON lecturer.lecturer_id=assigned_course.lecturer_id 
+            LEFT JOIN course ON assigned_course.course_id=course.course_id 
+            LEFT JOIN alloc_slots ON assigned_course.course_id = alloc_slots.course_id
+            LEFT JOIN rooms ON alloc_slots.room_id = rooms.room_id
+            WHERE lecturer.lecturer_id=? AND day_id=? AND time_id=?");
+        $query->execute([$lecturer_id, $day, $time]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
 
     public function get_day_id($day)
     {
-        $query = PARENT::p("SELECT * from day WHERE day_name = ?");
+        $query = PARENT::p("SELECT * FROM day WHERE day_name = ?");
         $query->execute([$day]);
         $result = $query->fetch(PDO::FETCH_OBJ);
-        
-        // Check if result exists before accessing property
-        if ($result) {
-            return $result->day_id;
-        }
-        return null; // Return null if no match found
+        return $result ? $result->day_id : null;
     }
 
     public function get_time_id($time)
     {
-        $query = PARENT::p("SELECT * from time WHERE start_time = ?");
+        $query = PARENT::p("SELECT * FROM time WHERE start_time = ?");
         $query->execute([$time]);
         $result = $query->fetch(PDO::FETCH_OBJ);
-        
-        // Check if result exists before accessing property
-        if ($result) {
-            return $result->time_id;
-        }
-        return null; // Return null if no match found
+        return $result ? $result->time_id : null;
     }
-    
-    // New helper method to get current or next available time slot
+
     public function get_current_time_slot()
     {
         date_default_timezone_set("Africa/Lagos");
         $current_hour = date('H');
         $current_minute = date('i');
-        
-        // Convert current time to minutes for easier comparison
         $current_time_minutes = ($current_hour * 60) + $current_minute;
-        
-        // Get all time slots
+
         $query = PARENT::p("SELECT * FROM `time` ORDER BY time_id ASC");
         $query->execute();
         $time_slots = $query->fetchAll(PDO::FETCH_OBJ);
-        
+
         foreach ($time_slots as $slot) {
-            // Parse start time
             $start_parts = explode(':', $slot->start_time);
             $start_minutes = ($start_parts[0] * 60) + $start_parts[1];
-            
-            // Parse end time
+
             $end_parts = explode(':', $slot->end_time);
             $end_minutes = ($end_parts[0] * 60) + $end_parts[1];
-            
-            // Check if current time falls within this slot or if this is the next upcoming slot
+
             if ($current_time_minutes >= $start_minutes && $current_time_minutes < $end_minutes) {
-                // Currently in this time slot
                 return $slot;
             } elseif ($current_time_minutes < $start_minutes) {
-                // This is the next upcoming slot
                 return $slot;
             }
         }
-        
-        // If no upcoming slot found, return null
+
         return null;
     }
-    
-}
 
+
+    public function get_time_by_id($id)
+    {
+        $query = PARENT::p("SELECT * FROM `time` WHERE time_id = ?");
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+}
 ?>
