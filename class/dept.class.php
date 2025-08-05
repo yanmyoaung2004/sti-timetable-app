@@ -11,6 +11,14 @@ class dept extends db
         return $query->execute([$dept_title, PARENT::now()]);
     }
 
+    public function get_dept($dept_id)
+    {
+        $query = PARENT::p("SELECT * FROM `department` WHERE `dept_id`=?");
+        $query->execute([$dept_id]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+    
+
     public function list_dept()
     {
         $query = PARENT::p("SELECT * FROM department ORDER BY dept_title ASC");

@@ -54,7 +54,7 @@
                         <span> Level </span>
                     </a>
                 </li>
-                 <li>
+                <li>
                     <a href="course.php">
                         <i class="la la-book"></i>
                         <span> Course </span>
@@ -73,12 +73,18 @@
                     </a>
                 </li>
                 <li>
+                    <a href="view-session.php">
+                        <i class="la la-graduation-cap"></i>
+                        <span> Session </span>
+                    </a>
+                </li>
+                <li>
                     <a href="gen-time-table.php">
                         <i class="la la-list"></i>
                         <span> Generate Time Table </span>
                     </a>
                 </li>
-                 <li>
+                <li>
                     <a href="view-time-table.php">
                         <i class="la la-book"></i>
                         <span> View Time Table </span>

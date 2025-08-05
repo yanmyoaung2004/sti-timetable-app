@@ -26,8 +26,8 @@ include "includes/sidebar.php";
                         <h4 class="page-title">Assign Course</h4>
                     </div>
                 </div>
-            </div>     
-            <!-- end page title --> 
+            </div>
+            <!-- end page title -->
             <div class="row">
                 <div class="col-md-4">
                     <div class="card">
@@ -35,9 +35,9 @@ include "includes/sidebar.php";
                             <div class="row">
                                 <div class="col-lg-12">
                                     <form method="post" action="">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                        <?php                                        
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <?php                                        
                                                     if(isset($_POST['add_course'])){
                                                         $course_id= $_POST['course'];
                                                         $lecturer= $_POST['lecturer'];
@@ -49,49 +49,54 @@ include "includes/sidebar.php";
                                                             echo '<div class="alert alert-danger">Course Cannot Be Added</div>';
                                                         }
                                                     }
-                                                ?>  
-                                            <div class="form-group">
-                                                <label>Course /C.Code</label>
-                                                <select class="form-control" name="course">
-                                                    <option selected="" disabled="">Select Course</option>
-                                                   <?php
+                                                ?>
+                                                <div class="form-group">
+                                                    <label>Course /C.Code</label>
+                                                    <select class="form-control" name="course">
+                                                        <option selected="" disabled="">Select Course</option>
+                                                        <?php
                                                         $list_course=$course->list_course();
                                                         foreach ($list_course as $list_course) {?>
-                                                            <option value="<?php echo $list_course->course_id ?>"><?php echo $list_course->course_title.'('.$list_course->course_unit.')' ?></option>
-                                                    <?php  # code...
+                                                        <option value="<?php echo $list_course->course_id ?>">
+                                                            <?php echo $list_course->course_title.'('.$list_course->course_unit.')' ?>
+                                                        </option>
+                                                        <?php  # code...
                                                         }?>
-                                                </select>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">  
-                                            <div class="form-group">
-                                                <label>Course Lecturer</label>
-                                                <select class="form-control" name="lecturer">
-                                                    <option>--Select Lecturer--</option>
-                                                    <?php
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Course Lecturer</label>
+                                                    <select class="form-control" name="lecturer">
+                                                        <option>--Select Lecturer--</option>
+                                                        <?php
                                                         $list_lecturer=$lecturer->list_lecturer();
                                                         foreach ($list_lecturer as $list_lecturer) {?>
-                                                            <option value="<?php echo $list_lecturer->lecturer_id ?>"><?php echo $list_lecturer->lecturer_firstname.' '.$list_lecturer->lecturer_lastname ?></option>
-                                                    <?php  # code...
+                                                        <option value="<?php echo $list_lecturer->lecturer_id ?>">
+                                                            <?php echo $list_lecturer->lecturer_firstname.' '.$list_lecturer->lecturer_lastname ?>
+                                                        </option>
+                                                        <?php  # code...
                                                         }?>
-                                                </select>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <button class="btn btn-block btn-info rounded-0"
+                                                        name="add_course">Add Course</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">  
-                                            <div class="form-group">
-                                               <button class="btn btn-block btn-info rounded-0" name="add_course">Add Course</button> 
-                                            </div>
-                                        </div>
-                                    </div>
                                     </form>
                                 </div>
                             </div>
                         </div> <!-- end card-body -->
                     </div> <!-- end card-->
                 </div> <!-- end col -->
-            
 
-            
+
+
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
@@ -114,10 +119,12 @@ include "includes/sidebar.php";
                                         <td><?php echo ++$count?></td>
                                         <td><?php echo $list_assigned_course->course_title?></td>
                                         <td><?php echo $list_assigned_course->course_unit?></td>
-                                        <td><?php echo $list_assigned_course->lecturer_firstname.' '.$list_assigned_course->lecturer_lastname?></td>
-                                        <td><a href="includes/unassign_course.php?id=<?php echo $list_assigned_course->assigned_id?>" class="btn btn-success"><i class="fa fa-times"></i> Unassign</a></td>
+                                        <td><?php echo $list_assigned_course->lecturer_firstname.' '.$list_assigned_course->lecturer_lastname?>
+                                        </td>
+                                        <td><a href="includes/unassign_course.php?id=<?php echo $list_assigned_course->assigned_id?>"
+                                                class="btn btn-success"><i class="fa fa-times"></i> Unassign</a></td>
                                     </tr>
-                                <?php }?>
+                                    <?php }?>
                                 </tbody>
                             </table>
 

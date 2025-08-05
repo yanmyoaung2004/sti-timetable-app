@@ -117,7 +117,7 @@ try {
     <div class="content">
         <!-- Start Content-->
         <div class="container-fluid">
-            
+
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
@@ -132,42 +132,42 @@ try {
                             <i class="fa fa-tachometer-alt mr-2"></i>Admin Dashboard
                         </h4>
                         <?php if ($current_session_info): ?>
-                            <p class="text-muted mb-0">
-                                <i class="fa fa-calendar mr-1"></i><?php echo htmlspecialchars($current_session_info); ?>
-                            </p>
+                        <p class="text-muted mb-0">
+                            <i class="fa fa-calendar mr-1"></i><?php echo htmlspecialchars($current_session_info); ?>
+                        </p>
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>     
-            <!-- end page title --> 
+            </div>
+            <!-- end page title -->
 
             <!-- Display success/error messages -->
             <?php if ($success_message): ?>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fa fa-check-circle mr-2"></i>
-                            <?php echo htmlspecialchars($success_message); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fa fa-check-circle mr-2"></i>
+                        <?php echo htmlspecialchars($success_message); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 </div>
+            </div>
             <?php endif; ?>
 
             <?php if ($error_message): ?>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fa fa-exclamation-triangle mr-2"></i>
-                            <?php echo htmlspecialchars($error_message); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fa fa-exclamation-triangle mr-2"></i>
+                        <?php echo htmlspecialchars($error_message); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 </div>
+            </div>
             <?php endif; ?>
 
             <!-- Statistics Cards -->
@@ -175,7 +175,8 @@ try {
                 <div class="col-xl-3 col-md-6">
                     <div class="card-box">
                         <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -197,7 +198,8 @@ try {
                 <div class="col-xl-3 col-md-6">
                     <div class="card-box">
                         <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -219,7 +221,8 @@ try {
                 <div class="col-xl-3 col-md-6">
                     <div class="card-box">
                         <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -241,7 +244,8 @@ try {
                 <div class="col-xl-3 col-md-6">
                     <div class="card-box">
                         <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -270,12 +274,13 @@ try {
                         <h4 class="header-title mb-3">
                             <i class="fa fa-cog mr-2"></i>Session & Semester Settings
                         </h4>
-                        
+
                         <form method="post" id="sessionForm" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="session" class="form-label">Active Session <span class="text-danger">*</span></label>
+                                        <label for="session" class="form-label">Active Session <span
+                                                class="text-danger">*</span></label>
                                         <select class="form-control" name="session" id="session" required>
                                             <option value="" disabled selected>-- Select Active Session --</option>
                                             <?php
@@ -299,7 +304,8 @@ try {
 
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="semester" class="form-label">Active Semester <span class="text-danger">*</span></label>
+                                        <label for="semester" class="form-label">Active Semester <span
+                                                class="text-danger">*</span></label>
                                         <select class="form-control" name="semester" id="semester" required>
                                             <option value="" disabled selected>-- Select Active Semester --</option>
                                             <?php
@@ -361,38 +367,38 @@ try {
                         <h4 class="header-title mb-3">
                             <i class="fa fa-clock mr-2"></i>Recent Activities
                         </h4>
-                        
+
                         <!-- Recent Lecturers -->
                         <div class="mb-3">
                             <h6 class="text-muted">Recently Added Lecturers</h6>
                             <?php if (!empty($recent_lecturers)): ?>
-                                <?php foreach ($recent_lecturers as $lecturer_item): ?>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="avatar-sm bg-soft-primary rounded mr-2">
-                                            <i class="fa fa-user text-primary"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <p class="mb-0 font-13">
-                                                <strong><?php echo htmlspecialchars($lecturer_item->lecturer_firstname . ' ' . $lecturer_item->lecturer_lastname); ?></strong>
-                                            </p>
-                                            <p class="mb-0 text-muted font-11">
-                                                <?php echo date('M d, Y', strtotime($lecturer_item->lecturer_date_added)); ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                <div class="text-center mt-3">
-                                    <a href="view-lecturer.php" class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-eye mr-1"></i>View All Lecturers
-                                    </a>
+                            <?php foreach ($recent_lecturers as $lecturer_item): ?>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="avatar-sm bg-soft-primary rounded mr-2">
+                                    <i class="fa fa-user text-primary"></i>
                                 </div>
+                                <div class="flex-1">
+                                    <p class="mb-0 font-13">
+                                        <strong><?php echo htmlspecialchars($lecturer_item->lecturer_firstname . ' ' . $lecturer_item->lecturer_lastname); ?></strong>
+                                    </p>
+                                    <p class="mb-0 text-muted font-11">
+                                        <?php echo date('M d, Y', strtotime($lecturer_item->lecturer_date_added)); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                            <div class="text-center mt-3">
+                                <a href="view-lecturer.php" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-eye mr-1"></i>View All Lecturers
+                                </a>
+                            </div>
                             <?php else: ?>
-                                <p class="text-muted font-13">No lecturers found</p>
-                                <div class="text-center">
-                                    <a href="add-lecturer.php" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-plus mr-1"></i>Add First Lecturer
-                                    </a>
-                                </div>
+                            <p class="text-muted font-13">No lecturers found</p>
+                            <div class="text-center">
+                                <a href="add-lecturer.php" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-plus mr-1"></i>Add First Lecturer
+                                </a>
+                            </div>
                             <?php endif; ?>
                         </div>
 
@@ -422,68 +428,70 @@ try {
 
     <!-- JavaScript functionality -->
     <script>
-        // Form validation
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                var forms = document.getElementsByClassName('needs-validation');
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-
-        // Auto-hide alerts after 5 seconds
-        setTimeout(function() {
-            $('.alert').fadeOut('slow');
-        }, 5000);
-
-        // Simple counter animation
-        $(document).ready(function() {
-            $('[data-plugin="counterup"]').each(function() {
-                var $this = $(this);
-                var countTo = parseInt($this.text());
-                
-                if (countTo > 0) {
-                    $({ countNum: 0 }).animate({
-                        countNum: countTo
-                    }, {
-                        duration: 1500,
-                        easing: 'linear',
-                        step: function() {
-                            $this.text(Math.floor(this.countNum).toLocaleString());
-                        },
-                        complete: function() {
-                            $this.text(countTo.toLocaleString());
-                        }
-                    });
-                }
+    // Form validation
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
             });
+        }, false);
+    })();
+
+    // Auto-hide alerts after 5 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut('slow');
+    }, 5000);
+
+    // Simple counter animation
+    $(document).ready(function() {
+        $('[data-plugin="counterup"]').each(function() {
+            var $this = $(this);
+            var countTo = parseInt($this.text());
+
+            if (countTo > 0) {
+                $({
+                    countNum: 0
+                }).animate({
+                    countNum: countTo
+                }, {
+                    duration: 1500,
+                    easing: 'linear',
+                    step: function() {
+                        $this.text(Math.floor(this.countNum).toLocaleString());
+                    },
+                    complete: function() {
+                        $this.text(countTo.toLocaleString());
+                    }
+                });
+            }
         });
+    });
     </script>
 
     <style>
-        .avatar-sm {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .bg-soft-primary {
-            background-color: rgba(0, 123, 255, 0.1);
-        }
-        
-        .flex-1 {
-            flex: 1;
-        }
+    .avatar-sm {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .bg-soft-primary {
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .flex-1 {
+        flex: 1;
+    }
     </style>
 
-<?php include "includes/footer.php"; ?>
+    <?php include "includes/footer.php"; ?>

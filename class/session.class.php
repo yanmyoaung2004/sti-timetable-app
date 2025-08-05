@@ -4,11 +4,12 @@ class session extends db
         //-------------topics Upload Function------------
     
     
-    public function add_session($session)
-    {
-        $query=PARENT::p("INSERT INTO session VALUES (NULL,?,?)");
-        return $query->execute([$session,PARENT::now()]);
+     public function add_session($session_year) {
+        $sql = "INSERT INTO session (session_year) VALUES (:session_year)";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':session_year' => $session_year]);
     }
+    
     public function list_session()
     {
         $query=PARENT::p("SELECT * FROM `session` ORDER BY session_id DESC");

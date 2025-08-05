@@ -3,7 +3,7 @@ class db
 {
 	private $server = "localhost";
 	private $user = "root";
-	private $pass = "";
+	private $pass = "ymanig";
 	private $db = "time_table";
 	public $conn;
 	function __construct()

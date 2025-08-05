@@ -20,7 +20,7 @@ class course extends db
      public function assign_course($course_id,$lecturer)
     {
         $check=PARENT::p("SELECT * FROM assigned_course WHERE course_id=? AND lecturer_id=?");
-        $check->execute();
+        $check->execute([$course_id,$lecturer]);
         if($check->rowCount()>0){
             return false;
         }

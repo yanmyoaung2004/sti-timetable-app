@@ -31,8 +31,8 @@ class time extends db
 
     public function add_schedule($course, $venue, $day, $time, $session, $semester)
     {
-        $check = PARENT::p("SELECT * FROM `alloc_slots` WHERE room_id=? AND time_id=? AND session_id=? AND semester_id=?");
-        $check->execute([$venue, $time, $session, $semester]);
+        $check = PARENT::p("SELECT * FROM `alloc_slots` WHERE room_id=? AND day_id=? AND time_id=? AND session_id=? AND semester_id=?");
+        $check->execute([$venue, $day, $time, $session, $semester]);
 
         $get = PARENT::p("SELECT * FROM `course` WHERE course_id=?");
         $get->execute([$course]);

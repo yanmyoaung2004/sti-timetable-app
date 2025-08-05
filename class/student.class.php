@@ -19,6 +19,37 @@ class student extends db
             return $query->execute([$fname,$lname,$email,$phone,$matric,$password,$dept,0,PARENT::now()]);
         }
     }
+
+    public function student_update($id, $fname, $lname, $matric, $email, $phone, $password, $dept)
+    {
+        $query1 = PARENT::p("SELECT * FROM student WHERE student_id=?");
+        $query1->execute([$id]);
+
+        if ($query1->rowCount() == 0) {
+            return 4;
+        } else {
+            $query = PARENT::p("UPDATE student SET 
+            student_firstname=?, 
+            student_lastname=?, 
+            student_email=?, 
+            student_phone=?, 
+            student_matricno=?,
+            student_password=?, 
+            student_dept_id=?
+            WHERE student_id=?");
+
+            return $query->execute([
+                $fname,
+                $lname,
+                $email,
+                $phone,
+                $matric,
+                $password,
+                $dept,
+                $id
+            ]);
+        }
+    }
     public function list_student()
     {
         $query=PARENT::p("SELECT * FROM `student` LEFT JOIN department ON student.student_dept_id=department.dept_id ORDER BY student_id DESC");
