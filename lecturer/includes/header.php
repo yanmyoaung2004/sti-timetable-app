@@ -62,7 +62,7 @@ $student=new student();
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                         <div class="brand-content">
-                            <h4 class="brand-title">TTMS</h4>
+                            <h4 class="brand-title">STI-TTMS</h4>
                             <span class="brand-subtitle">Time Table Management</span>
                         </div>
                     </a>
