@@ -128,8 +128,8 @@ $student=new student();
                             <div class="status-indicator online"></div>
                         </div>
                         <div class="user-info d-none d-sm-block">
-                            <span class="user-name">Admin</span>
-                            <span class="user-role">Administrator</span>
+                            <span class="user-name">Lecturer</span>
+                            <span class="user-role">Lecturer</span>
                         </div>
                         <i class="fas fa-chevron-down dropdown-arrow"></i>
                     </button>
