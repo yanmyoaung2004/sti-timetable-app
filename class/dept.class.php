@@ -54,6 +54,11 @@ class dept extends db
         return $query->fetch(PDO::FETCH_OBJ);
     }
 
+    public function get_level($level_id)
+    {
+        return $this->get_level_by_id($level_id);
+    }
+
     public function update_level($level_id, $level)
     {
         $query = PARENT::p("UPDATE level SET level = ? WHERE level_id = ?");
