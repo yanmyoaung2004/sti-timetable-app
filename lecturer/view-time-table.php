@@ -1,6 +1,7 @@
 <?php
 include "includes/header.php";
 include "includes/sidebar.php";
+
 $lecturer->check_lecturer();
 ?>
 <!-- ============================================================== -->
@@ -27,33 +28,46 @@ $lecturer->check_lecturer();
             </div>     
             <!-- end page title --> 
             <form method="post">
-            	<div class="form-inline">
-            		<select class="form-control" name="session">
-            			<option>--Select Session--</option>
-            			<?php
+                <div class="form-inline">
+                    <select class="form-control" name="dept">
+                        <option disabled="" selected="">--Select Department--</option>
+                        <?php
+            			$list_dept=$dept->list_dept();
+            			foreach ($list_dept as $list_dept) {?>
+                        <option value="<?php echo $list_dept->dept_id?>"><?php echo $list_dept->dept_title?></option>
+                        <?php }?>
+                    </select>
+                    <select class="form-control" name="session">
+                        <option>--Select Session--</option>
+                        <?php
             			$list_session=$session->list_session();
             			foreach ($list_session as $list_session) {?>
-            				<option value="<?php echo $list_session->session_id?>"><?php echo $list_session->session_year?></option>
-            			<?php }?>
-            		</select>
-            		<select class="form-control" name="semester">
-            			<option>--Select Semester--</option>
-            			<?php
+                        <option value="<?php echo $list_session->session_id?>"><?php echo $list_session->session_year?>
+                        </option>
+                        <?php }?>
+                    </select>
+                    <select class="form-control" name="semester">
+                        <option>--Select Semester--</option>
+                        <?php
             			$list_semester=$session->list_semester();
             			foreach ($list_semester as $list_semester) {?>
-            				<option value="<?php echo $list_semester->semester_id?>"><?php echo $list_semester->semester_title?></option>
-            			<?php }?>
-            		</select>
-            		<select class="form-control" name="level">
-            			<option>--Select Level--</option>
-            			<?php
+                        <option value="<?php echo $list_semester->semester_id?>">
+                            <?php echo $list_semester->semester_title?></option>
+                        <?php }?>
+                    </select>
+                    <select class="form-control" name="level">
+                        <option>--Select Level--</option>
+                        <?php
             			$list_level=$dept->list_level();
             			foreach ($list_level as $list_level) {?>
-            				<option value="<?php echo $list_level->level_id?>"><?php echo $list_level->level?></option>
-            			<?php }?>
-            		</select>
-            		<button class="btn btn-primary" name="submit">Generate Timetable</button>
-            	</div>
+                        <option value="<?php echo $list_level->level_id?>"><?php echo $list_level->level?></option>
+                        <?php }?>
+                    </select>
+                    <button class="btn btn-primary" name="submit">Generate Timetable</button>
+                </div>
+            </form>
+
+
             </form>
             <div class="row">
                 <div class="col-xl-12">
@@ -62,23 +76,15 @@ $lecturer->check_lecturer();
                   	 		<div id="content" class="col-md-12">
                   	 			<center><h2>CLASS TIMETABLE FOR <?php if(isset($_POST['session']) && isset($_POST['session'])){
                   	 				echo $session->get_session($_POST['session'])->session_year .' SESSION '.$session->get_semester($_POST['semester'])->semester_title.' Semester';}?> </h2></center>
-                  	 				<center><h2>Department of <?php if(isset($_SESSION['lecturer_dept']) && isset($_POST['level'])){
+                  	 			<center><h2>Department of <?php if(isset($_SESSION['lecturer_dept']) && isset($_POST['level'])){
                   	 				echo $dept->get_dept($_SESSION['lecturer_dept'])->dept_title .' '.$dept->get_level($_POST['level'])->level.'Level';}?> </h2></center>
                   	 			<table class="table table-bordered content"></center>
-                  	 				<tr>
-										<th>DAYS</th>
-										<th>8-9</th>
-										<th>9-10</th>
-										<th>10-11</th>
-										<th>11-12</th>
-										<th>12-1</th>
-										<th>1-2</th>
-										<th>2-3</th>
-										<th>3-4</th>
-										<th>4-5</th>
-										<th>5-6</th>
-										<th>6-7</th>
-									</tr>
+                                    <tr>
+                                        <th>DAYS</th>
+                                        <th colspan="4">9-11</th>
+                                        <th colspan="4">12-14</th>
+                                        <th colspan="4">14-16</th>
+                                    </tr>
                   	 				<tbody>
 									<?php
 										if(isset($_POST['submit'])){
