@@ -12,7 +12,7 @@ $student=new student();
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Student Registration - Time Table Management System</title>
+    <title>Student Registration - Time to Class</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -51,33 +51,39 @@ $student=new student();
                         <!-- Registration Form -->
                         <form action="" method="post" class="register-form" id="registrationForm">
                             <?php
-                            if(isset($_POST['submit'])){
-                                $fname=$_POST['fname'];
-                                $lname=$_POST['lname'];
-                                $matric=$_POST['matric'];
-                                $email=$_POST['email'];
-                                $phone=$_POST['phone'];
-                                $password=md5($_POST['password']);
-                                $dept=$_POST['dept'];
-                                if($student->student_reg($fname,$lname,$matric,$email,$phone,$password,$dept)==1){
+                            if (isset($_POST['submit'])) {
+                                $fname    = $_POST['fname'];
+                                $lname    = $_POST['lname'];
+                                $matric   = $_POST['matric'];
+                                $email    = $_POST['email'];
+                                $phone    = $_POST['phone'];
+                                $password = $_POST['password']; // plain password here, hashing happens in student_reg()
+                                $dept     = $_POST['dept'];
+
+                                // Call student_reg() once
+                                $result = $student->student_reg($fname, $lname, $matric, $email, $phone, $password, $dept);
+
+                                if ($result === true) {
+                                    // Success
                                     echo "<div class='alert alert-success alert-modern' role='alert'>
                                             <i class='fas fa-check-circle me-2'></i>
                                             Account Has Been Created Successfully! Redirecting to login...
-                                          </div><script type='text/javascript'>
+                                        </div>
+                                        <script type='text/javascript'>
                                             setTimeout(function(){ window.location.href='index.php'; }, 3000);
-                                          </script>";
-                                }
-                                elseif($student->student_reg($fname,$lname,$matric,$email,$phone,$password,$dept)==3){
+                                        </script>";
+                                } elseif ($result === 3) {
+                                    // Already exists
                                     echo "<div class='alert alert-danger alert-modern' role='alert'>
                                             <i class='fas fa-exclamation-circle me-2'></i>
                                             Account Already Exists! Please try with different details.
-                                          </div>";
-                                }
-                                else{
+                                        </div>";
+                                } else {
+                                    // Something went wrong
                                     echo "<div class='alert alert-danger alert-modern' role='alert'>
                                             <i class='fas fa-exclamation-triangle me-2'></i>
                                             Something Went Wrong! Please try again.
-                                          </div>";
+                                        </div>";
                                 }
                             }
                             ?>
