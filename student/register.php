@@ -57,11 +57,39 @@ $student=new student();
                                 $matric   = $_POST['matric'];
                                 $email    = $_POST['email'];
                                 $phone    = $_POST['phone'];
-                                $password = $_POST['password']; // plain password here, hashing happens in student_reg()
+                                $password = $_POST['password']; 
                                 $dept     = $_POST['dept'];
 
-                                // Call student_reg() once
-                                $result = $student->student_reg($fname, $lname, $matric, $email, $phone, $password, $dept);
+                                // Regex validation for names (server-side safety)
+                                if (!preg_match("/^[A-Za-z\s\-']+$/", $fname) || !preg_match("/^[A-Za-z\s\-']+$/", $lname)) {
+                                    echo "<div class='alert alert-danger alert-modern' role='alert'>
+                                            <i class='fas fa-exclamation-circle me-2'></i>
+                                            Invalid characters in First Name or Last Name.
+                                        </div>";
+                                } else {
+                                    // Proceed with registration
+                                    $result = $student->student_reg($fname, $lname, $matric, $email, $phone, $password, $dept);
+
+                                    if ($result === true) {
+                                        echo "<div class='alert alert-success alert-modern' role='alert'>
+                                                <i class='fas fa-check-circle me-2'></i>
+                                                Account Has Been Created Successfully! Redirecting to login...
+                                            </div>
+                                            <script type='text/javascript'>
+                                                setTimeout(function(){ window.location.href='index.php'; }, 3000);
+                                            </script>";
+                                    } elseif ($result === 3) {
+                                        echo "<div class='alert alert-danger alert-modern' role='alert'>
+                                                <i class='fas fa-exclamation-circle me-2'></i>
+                                                Account Already Exists! Please try with different details.
+                                            </div>";
+                                    } else {
+                                        echo "<div class='alert alert-danger alert-modern' role='alert'>
+                                                <i class='fas fa-exclamation-triangle me-2'></i>
+                                                Something Went Wrong! Please try again.
+                                            </div>";
+                                    }
+                                }
 
                                 if ($result === true) {
                                     // Success
@@ -314,13 +342,40 @@ $student=new student();
             </div>
         </div>
     </div>
-
+    
     <!-- Scripts -->
     <script src="../assets/js/vendor.min.js"></script>
     <script src="../assets/js/app.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
+        // Regex validation for names
+    function validateName(inputId) {
+        const input = document.getElementById(inputId);
+        const regex = /^[A-Za-z\s\-']+$/; 
+        if (!regex.test(input.value)) {
+            input.classList.add("error");
+            showAlert("Only letters, spaces, hyphens, and apostrophes are allowed in names.", "warning");
+            return false;
+        } else {
+            input.classList.remove("error");
+            return true;
+        }
+    }
+
+    // Enforce password strength before submission
+    document.getElementById("registrationForm").addEventListener("submit", function(e) {
+        if (!validateName("fname") || !validateName("lname")) {
+            e.preventDefault();
+            return false;
+        }
+        const strengthText = document.getElementById("strengthText").textContent;
+        if (["Very Weak", "Weak", "Fair"].includes(strengthText)) {
+            e.preventDefault();
+            showAlert("Password must be at least 'Good' strength.", "danger");
+            return false;
+        }
+    });
         let currentStep = 1;
         const totalSteps = 3;
 
